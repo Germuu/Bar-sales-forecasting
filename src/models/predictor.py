@@ -30,26 +30,26 @@ def predict_sales(filepath):
         
         # Initialize model
         model = Prophet(
-            yearly_seasonality=True,
+            yearly_seasonality=False,
             weekly_seasonality=True,
-            daily_seasonality=False,
-            changepoint_prior_scale=0.05
+            daily_seasonality=True,
+            changepoint_prior_scale=0.2
         )
         
-        # Add regressors
+        # Add regressors (temperature, precipitation, and event type)
         for col in regressor_cols:
             model.add_regressor(col)
         
         # Fit model
         model.fit(prophet_df)
         
-        # Create future dataframe
+        # Create future dataframe (next week prediction)
         future = model.make_future_dataframe(periods=7, freq='D')
         
-        # Add regressors (using placeholder values)
+        # Add regressors with placeholder values
         future['Temperature'] = prophet_df['Temperature'].mean()
         future['Precipitation'] = prophet_df['Precipitation'].mean()
-        future['Event Type'] = 'none'
+        future['Event Type'] = 'none'  # Default to 'none'
         
         # Encode events
         future = pd.get_dummies(future, columns=['Event Type'], prefix='event')
@@ -64,6 +64,8 @@ def predict_sales(filepath):
         
         # Generate forecast
         forecast = model.predict(future)
+        
+        # Sum predicted sales for the next week
         next_week_sales = forecast.tail(7)['yhat'].sum()
         
         predictions.append({
