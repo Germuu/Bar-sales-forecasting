@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
 from src.models.predictor import predict_sales  # Import your existing predictor function
 
 # Linear sales function to simulate sales
@@ -72,8 +71,9 @@ synthetic_data = synthetic_data.sort_values(by='Date')
 # Print first few rows to check data
 print(synthetic_data.head())
 
-# Split the data into training and test sets (80% training, 20% testing)
-train_data, test_data = train_test_split(synthetic_data, test_size=0.2, random_state=42)
+# Split the data into training and testing sets (first 83 days for training, last 7 days for testing)
+train_data = synthetic_data[synthetic_data['Date'] < '2024-03-22']  # First 83 days
+test_data = synthetic_data[synthetic_data['Date'] >= '2024-03-22']  # Last 7 days
 
 # Print sizes of training and test sets
 print(f"Train data size: {len(train_data)}")
@@ -92,7 +92,7 @@ for drink in predictions['Drink']:
     # Get the predicted sales
     predicted_sales = predictions[predictions['Drink'] == drink]['Predicted Sales'].values[0]
     
-    # Get the true sales for the corresponding drink in the test data
+    # Get the true sales for the corresponding drink in the test data (last 7 days)
     true_sales = test_data[test_data['Drink'] == drink]['Quantity Sold'].tail(7).sum()  # True sales over the last 7 days
     
     # Compute MSE (Mean Squared Error)
