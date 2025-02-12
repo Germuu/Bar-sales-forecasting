@@ -12,7 +12,7 @@ def linear_sales_function(temperature, precipitation, event_type, drink_type, ba
     
     # Drink-specific effects
     drink_factors = {
-        'Vodka': {'temperature': 0.6, 'precipitation': 0.3, 'event_factor': {'none': 1, 'music': 1.1, 'other': 1.2}},
+        'Vodka': {'temperature': 0.6, 'precipitation': 0.3, 'event_factor': {'none': 1, 'music': 1.8, 'other': 1.2}},
         'Whiskey': {'temperature': 0.8, 'precipitation': 0.2, 'event_factor': {'none': 1, 'music': 1.3, 'other': 0.9}},
         'Beer': {'temperature': 1.0, 'precipitation': -0.5, 'event_factor': {'none': 1, 'music': 1.5, 'other': 1.0}},
     }
@@ -70,6 +70,7 @@ synthetic_data = synthetic_data.sort_values(by='Date')
 
 # Print first few rows to check data
 print(synthetic_data.head())
+
 
 # Split the data into training and testing sets (first 83 days for training, last 7 days for testing)
 train_data = synthetic_data[synthetic_data['Date'] < '2024-03-22']  # First 83 days
