@@ -9,12 +9,79 @@
 <body class="container mt-5">
     <h2>Upload Sales Data</h2>
     <form action="/" method="post" enctype="multipart/form-data" class="mb-4">
-        <input type="file" name="file" class="form-control mb-2">
+        <!-- File upload input -->
+        <div class="mb-3">
+            <label for="file" class="form-label">Upload CSV File</label>
+            <input type="file" name="file" class="form-control" required>
+        </div>
+        
+        <!-- Event Data Input for the Next 7 Days -->
+        <h4 class="mt-4">Event Data for the Next 7 Days</h4>
+        <p>Please select the event type for each of the next 7 days. Options: 'music', 'other', or 'none'.</p>
+        
+        <div class="mb-3">
+            <label for="event_day_1" class="form-label">Day 1</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="event_day_2" class="form-label">Day 2</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="event_day_3" class="form-label">Day 3</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="event_day_4" class="form-label">Day 4</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="event_day_5" class="form-label">Day 5</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="event_day_6" class="form-label">Day 6</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="event_day_7" class="form-label">Day 7</label>
+            <select name="event_data" class="form-select" required>
+                <option value="none" selected>None</option>
+                <option value="music">Music</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <!-- Submit button -->
         <button type="submit" class="btn btn-primary">Upload & Predict</button>
     </form>
 
     {% if tables %}
-        <h3>Predicted Sales</h3>
+        <h3 class="mt-5">Predicted Sales</h3>
         <div>
             {% for table in tables %}
                 {{ table | safe }}

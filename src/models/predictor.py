@@ -1,7 +1,7 @@
 import pandas as pd
 from prophet import Prophet
 
-def predict_sales(filepath):
+def predict_sales(filepath, event_data = None):
     # Load and preprocess data
     data = pd.read_csv(filepath)
     data['Date'] = pd.to_datetime(data['Date'])

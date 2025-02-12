@@ -13,13 +13,16 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        # Handle file upload
         file = request.files.get('file')
+        event_data = request.form.getlist('event_data')  # Get event data for the next 7 days
+        
         if file and file.filename:
             # Save file and get filepath
             filepath = process_file(file, app.config['UPLOAD_FOLDER'])
             
-            # Make predictions
-            predictions = predict_sales(filepath)
+            # Make predictions with event data
+            predictions = predict_sales(filepath, event_data)
             
             # Restocking logic (mock current inventory and safety buffer for now)
             current_inventory = {'Beer': 200, 'Vodka': 100}  # Mock current stock for now
@@ -47,7 +50,6 @@ def upload_file():
                                    titles=predictions.columns.values)
     
     return render_template('index.html')
-
 
 # Run Flask app
 if __name__ == '__main__':
