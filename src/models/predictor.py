@@ -53,7 +53,7 @@ def predict_sales(filepath, event_data=None):
             yearly_seasonality=False,
             weekly_seasonality=True,
             daily_seasonality=True,
-            changepoint_prior_scale=0.05
+            changepoint_prior_scale=0.001
         )
         
         # Add regressors (temperature, precipitation, and all event type columns)
