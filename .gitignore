@@ -1,0 +1,78 @@
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+# Add your virtual environment directory if it's named differently
+
+# Python distributions
+*.egg
+*.egg-info
+dist/
+build/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+
+# IDE/editor specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Logs
+*.log
+
+# Test/coverage
+.coverage
+nosetests.xml
+pytest.xml
+*.cover
+*.hypothesis/
+
+# Distribution / packaging
+*.tar.gz
+*.zip
+*.whl
+*.deb
+*.rpm
+
+# PyInstaller
+*.spec
+
+# mypy
+.mypy_cache/
+
+# Pytest cache
+.cache/
+
+# pylint
+.pylint.d/
+
+# VSCode settings
+.settings/
