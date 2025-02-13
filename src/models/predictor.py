@@ -19,9 +19,6 @@ data = pd.get_dummies(data, columns=['Drink', 'Event Type'])
 # Step 4: Handle missing values (e.g., filling NaN with the mean for numeric columns)
 data.fillna(data.mean(), inplace=True)
 
-# Step 5: Create rolling averages for the past 7 days (assuming temperature and precipitation are numeric)
-
-
 # Step 6: Prepare data for training and testing
 # Get the unique dates in the dataset
 unique_dates = data['Date'].unique()
@@ -53,14 +50,18 @@ mse = mean_squared_error(y_test, y_pred_last_7_days)
 print(f'Mean Squared Error (MSE) for last 7 unique days: {mse}')
 
 # Step 10: Optionally, print predicted vs actual sales for the last 7 unique days
+# Get the columns for the drink one-hot encoding
+drink_columns = [col for col in test_data.columns if col.startswith('Drink_')]
+
+# Map predicted sales to the drink name
 predicted_sales = pd.DataFrame({
     'Date': test_data['Date'],
+    'Drink': test_data[drink_columns].idxmax(axis=1).str.replace('Drink_', ''),  # Get the drink name
     'Predicted Sales': y_pred_last_7_days,
     'Actual Sales': y_test
 })
+
 print(predicted_sales)
-
-
 
 # Plot feature importance for the Random Forest model
 feature_importances = model.feature_importances_
