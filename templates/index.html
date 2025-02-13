@@ -27,7 +27,8 @@
 <body>
 
     <h2>Upload Past Sales Data</h2>
-    <form action="/" method="post" enctype="multipart/form-data">
+    <!-- Update action to submit to /upload route -->
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
         <input type="file" name="file" required>
         <button type="submit">Upload</button>
     </form>
@@ -36,7 +37,8 @@
         <p>File uploaded: <strong>{{ filename }}</strong></p>
 
         <h2>Enter Weather & Events for Next Week</h2>
-        <form action="/" method="post">
+        <!-- Update action to submit to /predict route -->
+        <form action="{{ url_for('predict') }}" method="post">
             {% for i in range(7) %}
                 <h3>Day {{ i+1 }}</h3>
                 <label>Precipitation (mm):</label>
@@ -51,12 +53,11 @@
                     <option value="music">music</option>
                     <option value="other">other</option>
                 </select>
-                
             {% endfor %}
 
             <button type="submit">Get Predictions</button>
         </form>
-    {% endif %}  <!-- ✅ Closing the if statement properly -->
+    {% endif %}
 
     {% if predictions %}
         <h2>Predicted Sales for Next Week</h2>
