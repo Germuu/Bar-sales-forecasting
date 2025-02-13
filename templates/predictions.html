@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicted Sales</title>
+</head>
+<body>
+
+    <h2>Predicted Sales for the Upcoming Days</h2>
+
+    {% for prediction in predictions %}
+        <h3>{{ prediction.date }}</h3>
+        <table border="1">
+            <tr>
+                <th>Drink</th>
+                <th>Predicted Sales</th>
+            </tr>
+            {% for drink, sales in prediction.sales.items() %}
+            <tr>
+                <td>{{ drink }}</td>
+                <td>{{ sales }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+    {% endfor %}
+
+    <h2>Total Sales Summary</h2>
+    <table border="1">
+        <tr>
+            <th>Drink</th>
+            <th>Total Sales</th>
+        </tr>
+        {% for drink, sales in total_sales.items() %}
+        <tr>
+            <td>{{ drink }}</td>
+            <td>{{ sales }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('index') }}"><button>Go Back</button></a>
+
+</body>
+</html>

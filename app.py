@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -7,6 +7,7 @@ import os
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
+app.secret_key = "supersecretkey"  # Required for session storage
 
 # Ensure upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -20,16 +21,14 @@ X_train_columns = None  # Store feature columns from training
 
 @app.route("/", methods=["GET"])
 def index():
-    global drinks, uploaded_filename, model, train_data
-
-    # Just render the home page
-    return render_template("index.html", filename=uploaded_filename, drinks=drinks, predictions=None)
+    global drinks, uploaded_filename
+    return render_template("index.html", filename=uploaded_filename, drinks=drinks)
 
 @app.route("/upload", methods=["POST"])
 def upload():
     global uploaded_filename, model, train_data, drinks, X_train_columns
 
-    if "file" in request.files:  # File Upload Form
+    if "file" in request.files:
         file = request.files["file"]
         if file.filename:
             uploaded_filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
@@ -59,8 +58,33 @@ def upload():
             # Extract unique drink names
             drinks = list(pd.read_csv(uploaded_filename)['Drink'].unique())
 
-    # After uploading, redirect to the index page
-    return redirect(url_for('index'))
+    return redirect(url_for('setup_prediction'))  # Redirect to date selection
+
+@app.route("/setup_prediction", methods=["GET", "POST"])
+def setup_prediction():
+    if request.method == "POST":
+        start_date = request.form.get("start_date")
+        num_days = int(request.form.get("num_days"))
+
+        if not start_date:
+            return "Start date is required.", 400
+
+        start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        future_dates = [start_date + timedelta(days=i) for i in range(num_days)]
+
+        session['future_dates'] = [date.strftime('%Y-%m-%d') for date in future_dates]  # Store dates in session
+
+        return redirect(url_for('weather_input'))
+
+    return render_template("setup_prediction.html")
+
+@app.route("/weather_input", methods=["GET"])
+def weather_input():
+    if "future_dates" not in session:
+        return redirect(url_for("setup_prediction"))  # Redirect if dates are missing
+
+    future_dates = [datetime.strptime(date, '%Y-%m-%d') for date in session['future_dates']]
+    return render_template("weather_input.html", future_dates=future_dates)
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -69,22 +93,17 @@ def predict():
     if model is None or X_train_columns is None:
         return "Please upload a dataset first.", 400
 
-    # Get user input for the start date and number of days
-    start_date_str = request.form["start_date"]
-    num_days = int(request.form["num_days"])
+    if "future_dates" not in session:
+        return redirect(url_for("setup_prediction"))
 
-    # Convert start date string to a datetime object
-    start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
-
-    # Generate the future dates based on the user input
-    future_dates = pd.date_range(start_date, periods=num_days)
-
-    # Create the DataFrame with correct features
+    future_dates = [datetime.strptime(date, '%Y-%m-%d') for date in session['future_dates']]
+    
+    # Create DataFrame for predictions
     next_week_data = []
     for i, future_date in enumerate(future_dates):
         for drink in drinks:
             next_week_data.append({
-                "DayOfWeek": future_date.dayofweek,
+                "DayOfWeek": future_date.weekday(),
                 "Month": future_date.month,
                 "WeekOfYear": future_date.isocalendar().week,
                 "Precipitation": float(request.form[f"precipitation_{i}"]),
@@ -95,21 +114,24 @@ def predict():
                 "Event Type_other": 1 if request.form[f"event_{i}"] == "other" else 0,
             })
 
-    # Convert to DataFrame
     next_week_df = pd.DataFrame(next_week_data)
-
-    # Ensure feature order matches training data
-    next_week_df = next_week_df[X_train_columns]
-
-    # Make predictions
+    next_week_df = next_week_df[X_train_columns]  # Ensure correct feature order
     predictions_raw = model.predict(next_week_df)
 
-    # Aggregate predictions per drink
-    predictions = {drink: round(sum(predictions_raw[i::len(drinks)])) for i, drink in enumerate(drinks)}
+    # Store predictions per drink for each day
+    predictions = []
+    total_sales = {drink: 0 for drink in drinks}  # Initialize total sales
 
-    # Render the page with predictions
-    return render_template("index.html", filename=uploaded_filename, drinks=drinks, predictions=predictions)
+    for i, future_date in enumerate(future_dates):
+        daily_predictions = {
+            "date": future_date.strftime("%A, %d %B %Y"),
+            "sales": {drink: round(predictions_raw[i * len(drinks) + j]) for j, drink in enumerate(drinks)}
+        }
+        predictions.append(daily_predictions)
 
+        # Sum up the total sales per drink
+        for drink, sales in daily_predictions["sales"].items():
+            total_sales[drink] += sales
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    return render_template("predictions.html", predictions=predictions, total_sales=total_sales)
+

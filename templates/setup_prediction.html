@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Prediction Dates</title>
+</head>
+<body>
+
+    <h2>Choose Prediction Period</h2>
+    <form action="{{ url_for('setup_prediction') }}" method="post">
+        <label>Start Date:</label>
+        <input type="date" name="start_date" required>
+
+        <label>Number of Days:</label>
+        <input type="number" name="num_days" value="7" min="1" required>
+
+        <button type="submit">Next</button>
+    </form>
+
+</body>
+</html>
