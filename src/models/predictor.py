@@ -18,7 +18,7 @@ data = pd.get_dummies(data, columns=['Drink', 'Event Type'])
 
 # Step 4: Handle missing values (e.g., filling NaN with the mean for numeric columns)
 data.fillna(data.mean(), inplace=True)
-
+print(data)
 # Step 6: Prepare data for training and testing
 # Get the unique dates in the dataset
 unique_dates = data['Date'].unique()
