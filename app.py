@@ -69,14 +69,15 @@ def predict():
     if model is None or X_train_columns is None:
         return "Please upload a dataset first.", 400
 
-    today = datetime.today()
+    # Get user input for the start date and number of days
+    start_date_str = request.form["start_date"]
+    num_days = int(request.form["num_days"])
 
-    # Find the next Wednesday from today
-    days_until_next_wednesday = (2 - today.weekday()) % 7  # Wednesday = 2 (Monday=0)
-    next_wednesday = today + timedelta(days=days_until_next_wednesday)
+    # Convert start date string to a datetime object
+    start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
 
-    # Generate future dates for prediction (Wednesday to Tuesday)
-    future_dates = pd.date_range(next_wednesday, periods=7)
+    # Generate the future dates based on the user input
+    future_dates = pd.date_range(start_date, periods=num_days)
 
     # Create the DataFrame with correct features
     next_week_data = []
@@ -108,6 +109,7 @@ def predict():
 
     # Render the page with predictions
     return render_template("index.html", filename=uploaded_filename, drinks=drinks, predictions=predictions)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
