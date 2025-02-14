@@ -1,80 +1,101 @@
 /* static/style.css */
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f7f7f7; /* Light neutral background */
+    color: #333; /* Dark text for readability */
     text-align: center;
 }
 
 .container {
-    width: 60%;
+    width: 70%;
     margin: 40px auto;
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border: 1px solid #e0e0e0; /* Light border */
 }
 
 h2 {
-    color: #333;
+    color: #333; /* Darker text for headings */
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
 form {
     margin: 20px auto;
     padding: 20px;
-    background: #f9f9f9;
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    width: 80%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 input, button, select {
     width: 80%;
-    margin: 10px;
-    padding: 10px;
+    margin: 12px 0;
+    padding: 12px;
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc; /* Soft border for input fields */
     border-radius: 5px;
+    background-color: #fff; /* Clean background */
+    color: #333; /* Text color */
+    box-sizing: border-box;
+}
+
+input:focus, select:focus, button:focus {
+    outline: none;
+    border-color: #007bff; /* Highlighted border on focus */
 }
 
 button {
-    background-color: #28a745;
+    background-color: #007bff; /* Professional blue color */
     color: white;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background-color 0.3s;
+    padding: 12px 25px; /* Slightly larger padding for better touch target */
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 table {
     width: 80%;
-    margin: 20px auto;
+    margin: 30px auto;
     border-collapse: collapse;
     background: white;
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Soft border for table */
 }
 
 th, td {
     padding: 12px;
     text-align: center;
+    font-size: 16px;
 }
 
 th {
-    background-color: #007bff;
-    color: white;
+    background-color: #f2f2f2; /* Subtle light background for header */
+    color: #333; /* Dark text for headers */
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #fafafa; /* Very subtle striping for readability */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
 }
