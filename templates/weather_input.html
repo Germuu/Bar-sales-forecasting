@@ -20,6 +20,16 @@
                 <option value="music">Music</option>
                 <option value="other">Other</option>
             </select>
+
+            <div>
+                <h4>Weather Conditions</h4>
+                <p><strong>Max Temp:</strong> {{ weather_forecast[i]['Temp_Max'] }} °C</p>
+                <p><strong>Min Temp:</strong> {{ weather_forecast[i]['Temp_Min'] }} °C</p>
+                <p><strong>Precipitation:</strong> {{ weather_forecast[i]['Precipitation'] }} mm</p>
+                <p><strong>Wind Speed:</strong> {{ weather_forecast[i]['Wind_Speed'] }} m/s</p>
+                <p><strong>Cloud Cover:</strong> {{ weather_forecast[i]['Cloud_Cover'] }} %</p>
+            </div>
+
         {% endfor %}
 
         <button type="submit">Get Predictions</button>

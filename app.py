@@ -93,6 +93,7 @@ def upload():
 
 
 # Route: Setup Prediction
+# Route: Setup Prediction
 @app.route("/setup_prediction", methods=["GET", "POST"])
 def setup_prediction():
     if request.method == "POST":
@@ -105,12 +106,23 @@ def setup_prediction():
         start_date = datetime.strptime(start_date, "%Y-%m-%d")
         future_dates = [start_date + timedelta(days=i) for i in range(num_days)]
 
-        session['future_dates'] = [date.strftime('%Y-%m-%d') for date in future_dates]  # Store dates in session
+        # Store future dates in the session
+        session['future_dates'] = [date.strftime('%Y-%m-%d') for date in future_dates]
 
-        # Render the event input page with future_dates passed in context
-        return render_template('weather_input.html', future_dates=future_dates)
+        # Fetch weather forecast for future dates
+        start_date_str = future_dates[0].strftime("%Y-%m-%d")
+        end_date_str = future_dates[-1].strftime("%Y-%m-%d")
+        weather_forecast = fetch_forecast_weather(start_date_str, end_date_str)
+
+        # Convert weather_forecast DataFrame to a list of dictionaries
+        weather_forecast_dict = weather_forecast.to_dict(orient='records')
+
+        # Pass future_dates and weather_forecast_dict to the template
+        return render_template('weather_input.html', future_dates=future_dates, weather_forecast=weather_forecast_dict)
 
     return render_template("setup_prediction.html")
+
+
 
 
 
