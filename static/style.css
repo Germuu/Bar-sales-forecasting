@@ -52,11 +52,11 @@ input, button, select {
 
 input:focus, select:focus, button:focus {
     outline: none;
-    border-color: #007bff; /* Highlighted border on focus */
+    border-color: #4A3267; /* Highlighted border on focus */
 }
 
 button {
-    background-color: #007bff; /* Professional blue color */
+    background-color: #c6bade; /* Professional blue color */
     color: white;
     border: none;
     cursor: pointer;
@@ -67,7 +67,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #d3cfdc; /* Darker blue on hover */
 }
 
 table {
