@@ -94,9 +94,6 @@ TheSpot is a web application that predicts drink sales based on historical sales
 - `/setup_prediction` (GET, POST): Set up predictions by selecting future dates and events.
 - `/predict` (GET, POST): Display predicted sales for each drink and a summary of total sales.
 
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
 ## License
 
