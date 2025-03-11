@@ -1,100 +1,73 @@
 import pandas as pd
-from prophet import Prophet
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
-def preprocess_data(data):
-    # Ensure the Date column is in datetime format
-    data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
-    
-    # Fill missing values in Temperature and Precipitation with the median
-    data['Temperature'] = data['Temperature'].fillna(data['Temperature'].median())
-    data['Precipitation'] = data['Precipitation'].fillna(data['Precipitation'].median())
-    
-    # Convert Event Type column to categorical labels
-    event_mapping = {'none': 0, 'music': 1, 'other': 2}
-    data['Event Type'] = data['Event Type'].map(event_mapping)
-    
-    # Ensure Quantity Sold is numeric
-    data['Quantity Sold'] = pd.to_numeric(data['Quantity Sold'], errors='coerce')
-    
-    # Drop rows with missing values in critical columns
-    data.dropna(subset=['Quantity Sold', 'Date'], inplace=True)
-    
-    return data
+# Step 1: Read the dataset
+data = pd.read_csv('train_data.csv')
 
-def predict_sales(filepath, event_data=None):
-    # Load and preprocess data
-    data = pd.read_csv(filepath)
-    data = preprocess_data(data)  # Apply preprocessing to ensure correct format
-    
-    # Map numeric event types back to their category names for future use
-    event_mapping = {0: 'none', 1: 'music', 2: 'other'}
-    data['Event Type'] = data['Event Type'].map(event_mapping)
-    
-    predictions = []
-    
-    for drink in data['Drink'].unique():
-        drink_data = data[data['Drink'] == drink].copy()
-        
-        # Prepare Prophet dataframe
-        prophet_df = drink_data[['Date', 'Quantity Sold', 'Temperature', 
-                                 'Precipitation', 'Event Type']].rename(columns={
-                                     'Date': 'ds',
-                                     'Quantity Sold': 'y'
-                                 })
-        
-        # One-hot encode event type in training data
-        prophet_df = pd.get_dummies(prophet_df, columns=['Event Type'], prefix='event')
+# Step 2: Handle date-related features
+data['Date'] = pd.to_datetime(data['Date'])
+data['DayOfWeek'] = data['Date'].dt.dayofweek
+data['Month'] = data['Date'].dt.month
+data['WeekOfYear'] = data['Date'].dt.isocalendar().week
 
-        # Store regressor columns (excluding ds and y)
-        regressor_cols = [col for col in prophet_df.columns if col not in ['ds', 'y']]
-        
-        # Initialize Prophet model
-        model = Prophet(
-            yearly_seasonality=False,
-            weekly_seasonality=True,
-            daily_seasonality=True,
-            changepoint_prior_scale=0.001
-        )
-        
-        # Add regressors (temperature, precipitation, and all event type columns)
-        for col in regressor_cols:
-            model.add_regressor(col)
+# Step 3: Handle categorical features (e.g., using one-hot encoding for 'Drink' and 'Event Type')
+data = pd.get_dummies(data, columns=['Drink', 'Event Type'])
 
-        # Fit the model
-        model.fit(prophet_df)
+# Step 4: Handle missing values (e.g., filling NaN with the mean for numeric columns)
+data.fillna(data.mean(), inplace=True)
+print(data)
+# Step 6: Prepare data for training and testing
+# Get the unique dates in the dataset
+unique_dates = data['Date'].unique()
+# Select the last 7 unique dates for the test set
+last_7_dates = unique_dates[-7:]  
 
-        # Create future dataframe (next week prediction)
-        future = model.make_future_dataframe(periods=7, freq='D')
+# Filter data for the last 7 unique dates (keep all drinks for those days)
+train_data = data[~data['Date'].isin(last_7_dates)]  # All except last 7 unique dates
+test_data = data[data['Date'].isin(last_7_dates)]  # Data for the last 7 unique dates
 
-        # Add regressors with default values
-        future['Temperature'] = prophet_df['Temperature'].mean()
-        future['Precipitation'] = prophet_df['Precipitation'].mean()
+# Prepare training data
+X_train = train_data.drop(columns=['Quantity Sold', 'Date'])  # Features for training
+y_train = train_data['Quantity Sold']  # Target (Sales) for training
 
-        # **Corrected: Ensure event columns exist in the future dataframe**
-        future_events = pd.DataFrame(0, index=future.index, columns=[col for col in regressor_cols if 'event_' in col])
+# Prepare testing data (actual sales for the last 7 unique dates)
+X_test = test_data.drop(columns=['Quantity Sold', 'Date'])  # Features for testing
+y_test = test_data['Quantity Sold']  # Actual sales for testing
 
-        # Assign provided event data (only for last 7 days)
-        if event_data:
-            event_mapping = {'none': [1, 0, 0], 'music': [0, 1, 0], 'other': [0, 0, 1]}
-            event_encoded = [event_mapping.get(evt, [0, 0, 0]) for evt in event_data]
+# Step 7: Train the model (Random Forest)
+model = RandomForestRegressor()
+model.fit(X_train, y_train)
 
-            # Convert list to DataFrame
-            future_events.iloc[-7:] = event_encoded
+# Step 8: Make predictions for all days (including the last 7 unique days) based on the trained model
+y_pred_all_days = model.predict(data.drop(columns=['Quantity Sold', 'Date']))  # Predict for all days
 
-        # Merge event regressors into future dataframe
-        future = pd.concat([future, future_events], axis=1)
+# Step 9: Evaluate the model for the last 7 unique days
+y_pred_last_7_days = y_pred_all_days[-len(last_7_dates)*3:]  # Get predictions for last 7 unique days (3 drinks per day)
+mse = mean_squared_error(y_test, y_pred_last_7_days)
+print(f'Mean Squared Error (MSE) for last 7 unique days: {mse}')
 
+# Step 10: Optionally, print predicted vs actual sales for the last 7 unique days
+# Get the columns for the drink one-hot encoding
+drink_columns = [col for col in test_data.columns if col.startswith('Drink_')]
 
-        # Generate forecast
-        forecast = model.predict(future)
-        
-        # Sum predicted sales for the next week
-        next_week_sales = forecast.tail(7)['yhat'].sum()
-        
-        predictions.append({
-            'Drink': drink,
-            'Predicted Sales': max(round(next_week_sales), 0),
-            'Confidence': f"{round(forecast.tail(7)['yhat_lower'].mean())}-{round(forecast.tail(7)['yhat_upper'].mean())}"
-        })
+# Map predicted sales to the drink name
+predicted_sales = pd.DataFrame({
+    'Date': test_data['Date'],
+    'Drink': test_data[drink_columns].idxmax(axis=1).str.replace('Drink_', ''),  # Get the drink name
+    'Predicted Sales': y_pred_last_7_days,
+    'Actual Sales': y_test
+})
 
-    return pd.DataFrame(predictions)
+print(predicted_sales)
+
+# Plot feature importance for the Random Forest model
+feature_importances = model.feature_importances_
+features = X_train.columns
+plt.barh(features, feature_importances)
+plt.xlabel('Feature Importance')
+plt.ylabel('Feature')
+plt.title('Random Forest Feature Importance')
+plt.show()
