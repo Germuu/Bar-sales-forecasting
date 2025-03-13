@@ -1,94 +1,94 @@
 Date,Drink,Event Type,Quantity Sold
-2024-01-01, Vodka, none, 78.22  
-2024-01-01, Whiskey, other, 82.18  
-2024-01-01, Beer, other, 75.78  
-2024-01-02, Vodka, music, 73.69  
-2024-01-02, Whiskey, none, 82.43  
-2024-01-02, Beer, music, 81.58  
-2024-01-03, Vodka, none, 73.77  
-2024-01-03, Whiskey, other, 80.18  
-2024-01-03, Beer, none, 83.90  
-2024-01-04, Vodka, other, 72.80  
-2024-01-04, Whiskey, music, 85.25  
-2024-01-04, Beer, other, 83.79  
-2024-01-05, Vodka, none, 66.20  
-2024-01-05, Whiskey, music, 78.86  
-2024-01-05, Beer, none, 72.80  
-2024-01-06, Vodka, music, 75.54  
-2024-01-06, Whiskey, none, 80.33  
-2024-01-06, Beer, none, 81.94  
-2024-01-07, Vodka, other, 71.45  
-2024-01-07, Whiskey, other, 75.45  
-2024-01-07, Beer, other, 75.95  
-2024-01-08, Vodka, music, 78.33  
-2024-01-08, Whiskey, music, 80.99  
-2024-01-08, Beer, none, 79.68  
-2024-01-09, Vodka, none, 71.93  
-2024-01-09, Whiskey, other, 82.55  
-2024-01-09, Beer, music, 78.52  
-2024-01-10, Vodka, other, 73.71  
-2024-01-10, Whiskey, music, 79.19  
-2024-01-10, Beer, music, 72.69  
-2024-01-11, Vodka, music, 76.89  
-2024-01-11, Whiskey, none, 81.38  
-2024-01-11, Beer, music, 79.02  
-2024-01-12, Vodka, none, 72.44  
-2024-01-12, Whiskey, other, 83.52  
-2024-01-12, Beer, other, 81.21  
-2024-01-13, Vodka, music, 74.18  
-2024-01-13, Whiskey, music, 79.72  
-2024-01-13, Beer, none, 74.49  
-2024-01-14, Vodka, none, 69.91  
-2024-01-14, Whiskey, other, 82.05  
-2024-01-14, Beer, other, 83.01  
-2024-01-15, Vodka, music, 75.22  
-2024-01-15, Whiskey, none, 81.79  
-2024-01-15, Beer, music, 82.13  
-2024-01-16, Vodka, none, 74.79  
-2024-01-16, Whiskey, music, 84.05  
-2024-01-16, Beer, other, 73.28  
-2024-01-17, Vodka, other, 71.57  
-2024-01-17, Whiskey, music, 81.61  
-2024-01-17, Beer, music, 77.94  
-2024-01-18, Vodka, music, 77.18  
-2024-01-18, Whiskey, none, 76.86  
-2024-01-18, Beer, none, 72.61  
-2024-01-19, Vodka, none, 78.42  
-2024-01-19, Whiskey, other, 79.01  
-2024-01-19, Beer, other, 81.79  
-2024-01-20, Vodka, music, 77.85  
-2024-01-20, Whiskey, music, 78.81  
-2024-01-20, Beer, none, 79.24  
-2024-01-21, Vodka, other, 71.95  
-2024-01-21, Whiskey, none, 83.94  
-2024-01-21, Beer, none, 75.84  
-2024-01-22, Vodka, music, 75.73  
-2024-01-22, Whiskey, other, 77.71  
-2024-01-22, Beer, music, 72.91  
-2024-01-23, Vodka, other, 78.03  
-2024-01-23, Whiskey, music, 80.42  
-2024-01-23, Beer, none, 75.27  
-2024-01-24, Vodka, none, 71.56  
-2024-01-24, Whiskey, music, 79.14  
-2024-01-24, Beer, other, 74.58  
-2024-01-25, Vodka, music, 77.79  
-2024-01-25, Whiskey, other, 81.58  
-2024-01-25, Beer, other, 73.76  
-2024-01-26, Vodka, none, 72.43  
-2024-01-26, Whiskey, music, 82.34  
-2024-01-26, Beer, none, 78.23  
-2024-01-27, Vodka, other, 75.82  
-2024-01-27, Whiskey, music, 74.93  
-2024-01-27, Beer, music, 81.56  
-2024-01-28, Vodka, music, 73.91  
-2024-01-28, Whiskey, other, 82.47  
-2024-01-28, Beer, other, 75.28  
-2024-01-29, Vodka, none, 70.82  
-2024-01-29, Whiskey, other, 78.64  
-2024-01-29, Beer, none, 81.90  
-2024-01-30, Vodka, music, 72.62  
-2024-01-30, Whiskey, music, 81.95  
-2024-01-30, Beer, none, 79.51  
-2024-01-31, Vodka, none, 75.27  
-2024-01-31, Whiskey, music, 79.36  
-2024-01-31, Beer, other, 80.04 
+2024-01-01,Vodka,none,72.10
+2024-01-01,Whiskey,other,48.75
+2024-01-01,Beer,other,89.34
+2024-01-02,Vodka,music,85.42
+2024-01-02,Whiskey,none,45.98
+2024-01-02,Beer,music,95.61
+2024-01-03,Vodka,none,71.28
+2024-01-03,Whiskey,other,50.31
+2024-01-03,Beer,none,88.45
+2024-01-04,Vodka,other,73.62
+2024-01-04,Whiskey,music,52.67
+2024-01-04,Beer,other,90.12
+2024-01-05,Vodka,none,67.84
+2024-01-05,Whiskey,music,55.21
+2024-01-05,Beer,none,85.43
+2024-01-06,Vodka,music,82.56
+2024-01-06,Whiskey,none,47.32
+2024-01-06,Beer,none,92.18
+2024-01-07,Vodka,other,74.39
+2024-01-07,Whiskey,other,49.87
+2024-01-07,Beer,other,91.05
+2024-01-08,Vodka,music,79.15
+2024-01-08,Whiskey,music,50.92
+2024-01-08,Beer,none,87.29
+2024-01-09,Vodka,none,69.21
+2024-01-09,Whiskey,other,46.84
+2024-01-09,Beer,music,93.45
+2024-01-10,Vodka,other,75.90
+2024-01-10,Whiskey,music,51.76
+2024-01-10,Beer,music,88.32
+2024-01-11,Vodka,music,83.47
+2024-01-11,Whiskey,none,43.58
+2024-01-11,Beer,music,94.73
+2024-01-12,Vodka,none,68.14
+2024-01-12,Whiskey,other,50.19
+2024-01-12,Beer,other,90.85
+2024-01-13,Vodka,music,81.32
+2024-01-13,Whiskey,music,48.72
+2024-01-13,Beer,none,86.49
+2024-01-14,Vodka,none,67.50
+2024-01-14,Whiskey,other,45.35
+2024-01-14,Beer,other,92.78
+2024-01-15,Vodka,music,78.23
+2024-01-15,Whiskey,none,44.67
+2024-01-15,Beer,music,89.92
+2024-01-16,Vodka,none,74.12
+2024-01-16,Whiskey,music,53.21
+2024-01-16,Beer,other,84.45
+2024-01-17,Vodka,other,72.98
+2024-01-17,Whiskey,music,50.67
+2024-01-17,Beer,music,90.34
+2024-01-18,Vodka,music,80.76
+2024-01-18,Whiskey,none,42.83
+2024-01-18,Beer,none,87.16
+2024-01-19,Vodka,none,78.41
+2024-01-19,Whiskey,other,51.24
+2024-01-19,Beer,other,92.84
+2024-01-20,Vodka,music,79.52
+2024-01-20,Whiskey,music,49.92
+2024-01-20,Beer,none,89.73
+2024-01-21,Vodka,other,71.23
+2024-01-21,Whiskey,none,46.84
+2024-01-21,Beer,none,86.42
+2024-01-22,Vodka,music,74.85
+2024-01-22,Whiskey,other,52.11
+2024-01-22,Beer,music,88.95
+2024-01-23,Vodka,other,77.29
+2024-01-23,Whiskey,music,53.76
+2024-01-23,Beer,none,90.17
+2024-01-24,Vodka,none,69.47
+2024-01-24,Whiskey,music,50.13
+2024-01-24,Beer,other,85.84
+2024-01-25,Vodka,music,80.33
+2024-01-25,Whiskey,other,49.56
+2024-01-25,Beer,other,91.67
+2024-01-26,Vodka,none,72.94
+2024-01-26,Whiskey,music,51.88
+2024-01-26,Beer,none,88.52
+2024-01-27,Vodka,other,76.35
+2024-01-27,Whiskey,music,47.98
+2024-01-27,Beer,music,92.16
+2024-01-28,Vodka,music,75.89
+2024-01-28,Whiskey,other,52.73
+2024-01-28,Beer,other,87.34
+2024-01-29,Vodka,none,68.67
+2024-01-29,Whiskey,other,48.29
+2024-01-29,Beer,none,91.02
+2024-01-30,Vodka,music,74.31
+2024-01-30,Whiskey,music,53.24
+2024-01-30,Beer,none,89.78
+2024-01-31,Vodka,none,77.14
+2024-01-31,Whiskey,music,50.62
+2024-01-31,Beer,other,88.51

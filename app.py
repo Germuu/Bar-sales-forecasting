@@ -183,9 +183,9 @@ def predict():
                     "Cloud_Cover": weather_forecast.loc[i, "Cloud_Cover"],
                     **{f"Drink_{drink}": 1 if d == drink else 0 for d in drinks},
                     # Set event types based on the selected event
-                    "Event Type_ music": 1 if event == "music" else 0,
-                    "Event Type_ none": 1 if event == "none" else 0,
-                    "Event Type_ other": 1 if event == "other" else 0,
+                    "Event Type_music": 1 if event == "music" else 0,
+                    "Event Type_none": 1 if event == "none" else 0,
+                    "Event Type_other": 1 if event == "other" else 0,
                 })
 
         next_week_df = pd.DataFrame(next_week_data)
